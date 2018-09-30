@@ -1,0 +1,482 @@
+1. Bootstrap介绍
+	Bootstrap是目前最流行的前端开发【框架】，由Twitter的两位前员工 Mark Otto和Jacob Thornton在2010年8月创建。是一套基于Less(Less 是一门 CSS 预处理语言，它扩展了 CSS 语言，增加了变量、Mixin、函数等特性，使 CSS 更易维护和扩展。Less 可以运行在 Node 或浏览器端。)的前端开发库。
+
+	Bootstrap提供了以下重要的特性
+		1) 一套完整的基础CSS插件
+		2) 丰富的预定义样式表
+		3) 一组基于jQuery的JS插件集
+		4) 一组灵活的响应式栅格系统，崇尚移动先行
+	为了支持移动端需要在head中添加下面meta
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+2. 整体架构
+	Bootstrap分为6大部分，
+	1) CSS12栅格系统
+		以规则的网格阵列来指导和规范网页中的版面布局以及信息分布,BS的12栅格系统就是将网页的总宽度分为12份，开发人员可以自由按份组合。
+	2) 基础布局组件
+		是最基础的，用于构建丰富多彩网页的基本组件。例如排版，代码，表格，按钮，表单等这些基础组件可以随意应用于任何页面的任何元素上，
+	3) jQuery
+		BS中所有的JavaScript插件都是基于jQuery1.10+,如果需要使用这些插件，必须先引入jQuery库
+	4) 响应式设计
+		无论用户使用什么终端，页面可以自动切换分辨率，图片尺寸，以及相关脚本用来适应不同设备。
+		通过媒体查询表达式可以区分四种不同宽度浏览器（超小屏，小屏，中屏，大屏）其像素的分界点分别为768px,992px,1200px
+		//超小型是默认实现
+		//小型
+		@media (min-width: 769px) {
+			.container{ width:750px }
+		}
+		//中型
+		@media (min-width: 992px){
+			.container{ width:970px }
+		}
+		//大型
+		@media (min-width: 1200px){
+			.container{ width:1170px }
+		}
+	5) CSS组件
+		下拉菜单 	Dropdown
+		按钮组 	Button group
+		按钮下拉菜单 	Button dropdown
+		输入框组 	Input group
+		列表组 	List group
+		面板 	Panel
+		导航 	Nav
+		导航条 	Navbar
+		面包屑导航Breadcrumb
+		分页导航 	Pagination
+		标签 	Label
+		徽章 	Label&Badge
+		排版 	Typography
+		缩略图	Thumbnail
+		警告框	Alert
+		进度条	Progress bar
+		媒体对象	Media object
+		洼地		Well	
+		图标 	Icon
+		大屏幕展播 	Jumbotron
+		页面标题 	Page header
+	6) JavaScript插件
+		
+3.栅格系统
+	栅格系统的实现原理很简单，仅仅是通过定义容器大小，平分12份，再调整内外边距，最后再结合媒体查询，就制作出了强大的响应式的栅格系统。		
+
+	1) 基本用法
+		栅格系统的基本用法，就是列的组合，在基本用法里有4种特性，结合2讲到的响应式用法，就能组合出功能强大，各式各样的布局元素。以下为栅格系统的4种特性
+
+		1. 列组合
+			通过更改数字来合并列
+			例：
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1">.col-md-1</div>
+					...<!-- 此处省略10个 -->
+					<div class="col-md-1">.col-md-1</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">.col-md-4</div>
+					<div class="col-md-8">.col-md-8</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">.col-md-6</div>
+					<div class="col-md-6">.col-md-6</div>
+				</div>
+			</div>
+			列组合的实现方式很简单，随意的搭配出自己想要的效果
+
+		2. 列偏移
+			如果不想要两个相邻的列挨得太近，就需要用到列偏移了，不用margin，只要用.col-md-offset-*形式就可以将列偏移到右侧。
+			例：
+			<div class="row">
+				<div class="col-md-4">left</div>
+				<div class="col-md-4 col-md-offset-4">向右偏移4个列的宽度</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-md-offset-3">向右偏移3个列的宽度</div>
+				<div class="col-md-3 col-md-offset-3">向右偏移3个列的宽度</div>
+			</div>
+		
+		3. 列嵌套
+			栅格系统也支持列嵌套，即在一个列内部再声明一个或多个行(row)。
+			例：
+			<div class="row">
+				<div class="col-md-9">
+					外层：.col-md-9
+					<div class="row">
+						<div class="col-md-6">内层：.col-md-6</div>
+						<div class="col-md-6">内层：.col-md-6</div>
+					</div>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+
+		4. 列排序
+			就是改变列的方向，其实就是改变左右浮动，并且设置浮动的距离，可以通过。col-md-push-*和.col-md-pull-*来实现
+			例：
+			<div class="row">
+				<div class="col-md-9">.col-md-9</div>
+				<div class="col-md-3">.col-md-3</div>
+			</div>
+	排序后
+	<div class="row">
+		<div class="col-md-9 col-md-push-3">向右推3个列的距离</div>
+		<div class="col-md-3 col-md-pull-9">向左拉9个列的距离</div>
+	</div>
+	这样来实现了这两列的位置变换
+	2) 响应式栅栏
+		Bootstrap针对不同的屏幕尺寸提供了不同的样式，前面的例子一直使用中型(md),再加上其他三种超小(xs)、小型(sm)、大型(lg),组合的方式就多了。
+
+		1. 跨设备组合定义
+			一种样式在其定义的尺寸范围以外是不起作用的，比如在小型或者大型屏幕下，所有带有md的样式都不生效，而且没有默认值，也就是说我们可以在一个元素上应用不同类型的样式，以适配不同尺寸的屏幕。
+			例：
+			<div class="row">
+				<div class="col-md-9 col-sm-12">.col-md-9</div>
+				<div class="col-md-3 col-sm-6">.col-md-3</div>
+			</div>
+			这样该效果在不同的尺寸的屏幕上效果是不一样的，我们改变浏览器的宽度就可以看出效果
+			由于源码的设定是向大兼容的，也就是说如果值设定了col-sm那么在中型屏幕中也可以显示。但是不会向小兼容。可以在一个div上使用xs,sm,md,lg类型样式，这样在任何设备中都可以正常浏览。
+
+		2. 清除浮动问题
+			当内容超过盒子的宽度时候可能会出现布局错乱情况
+			例如：
+				按照以下代码实现的效果，在小型屏幕是排一行，超小型则排2行，但是，如果在div里加入内容的话，效果就不一样了
+				<div class="row">
+					<div class="col-xs-6 col-sm-3">
+						1 .col-xs-6 .col-sm-3<br>
+						很多的内容<br>
+						很多的内容
+					</div>
+					<div class="col-xs-6 col-sm-3">2 .col-xs-6 .col-sm-3</div>
+					<div class="clearfix visible-xs"></div>
+					<div class="col-xs-6 col-sm-3">3 .col-xs-6 .col-sm-3</div>
+					<div class="col-xs-6 col-sm-3">4 .col-xs-6 .col-sm-3</div>
+				</div>
+				这时候会发现并没有达到想要的效果，这是因为所有的col都是左浮动，由于没有清除浮动，第3个div开始换行的时候，div1的高度过高，所有div3就在右边紧挨着显示了。要解决这个问题就需要清除浮动，这里只需要使用Bootstrap提供的clearfix样式。
+				<div class="clearfix visible-xs"></div>
+					clearfix 	表示清除浮动
+					visible-xs	表示只有在超小型屏幕上才能显示
+				
+		3. 列偏移和列排序
+			由于响应式设计是利用了媒体查询的特性，而所有以col-*开头的样式都是在此定义的，所以像列偏移（offset）、列排序（pull和push）相关的样式都可以用，以组合出不同的精美样式。
+4. 布局
+css布局是Bootstrap三大核心内容的基础，这基础的布局语法是通过css最基础、简单的组合来实现的，通过这些基础而又核心的布局语法，不需要太多时间，就可以制作出比较精美的页面。
+	1. 基础排版
+		1) 标题
+			Bootstrap为传统的标题元素h1~h6重新定义了标准的样式，使得在所有浏览器下显示效果都一样。
+			1. 定义如下：
+				元素 	字体大小 		其他样式
+				h1 		36px 	margin-top:20px;margin-bottom:10px
+				h2 		30px 	margin-top:20px;margin-bottom:10px 	
+				h3  	24px 	margin-top:20px;margin-bottom:10px
+				h4 		18px 	margin-top:10px;margin-bottom:10px
+				h5 		14px 	margin-top:10px;margin-bottom:10px
+				h6 		12px 	margin-top:10px;margin-bottom:10px
+			2. 传统用法
+				<h1>Bootstrap 权威</h1>
+				<h2>Bootstrap 权威</h2>
+				<h3>Bootstrap 权威</h3>
+				<h4>Bootstrap 权威</h4>
+				<h5>Bootstrap 权威</h5>
+				<h6>Bootstrap 权威</h6>
+			3. BS标题样式
+				Bootstrap还定义了6个class样式(.h1~.h6),以便在非标题元素下使用相同的样式，唯一的不同是没有设置margin-top和margin-bottom
+				<span class="h1">Bootstrap 权威</span><br>
+				<span class="h2">Bootstrap 权威</span><br>
+				<span class="h3">Bootstrap 权威</span><br>
+				<span class="h4">Bootstrap 权威</span><br>
+				<span class="h5">Bootstrap 权威</span><br>
+				<span class="h6">Bootstrap 权威</span><br>
+			4. 标题内小号字体
+				大部分情况，在标题元素里可能会应用<small>元素，使显示小一点。而Bootstrap也为此特别定义了样式
+				1) 所有标题元素里的<small>内容的字体颜色都是灰色（#999999），行间距为1
+				2) <small>内的文本字体在h1~h3内是当前元素对应字体大小的65%，而在h4~h6下则是75%。
+
+		2) 页面主题
+			1.默认情况，Bootstrap为全局设置的字体大小font-size=14px，行间距line-height为字体大小的1.428倍(即20px)。该设置应用于<body>和所有的段落上。
+			2.<p>元素内的段落会有一个额外的margin-bottom,大小为行间距一半即10px
+			3.如果想让一个段落突出显示，可以使用.lead样式，其作用主要是增大字体大小、粗细、行间距和margin-bottom。
+				bs源码
+				.lead{
+					margin-bottom:20px;
+					font-size:16px;
+					font-weight:300;
+					line-height:1.4;
+				}
+
+				<p>不突出</p>
+				<p class="lead">突出显示</p>
+		
+		3) 强调文本
+			1. Bootstrap将默认的文本强调元素进行了轻量级实现，这些元素分别为：small、strong、em、cite。
+			2. 同样，Bootstrap也为对齐方式定义了简单而又明了的4个样式以便使用
+				<p class="text-left">JavaScript left</p>
+				<p class="text-center">JavaScript center</p>
+				<p class="text-right">JavaScript right</p>
+				<p class="text-justify">JavaScript justify</p>
+
+		4) 缩略语
+			Bootstrap在abbr元素上实现了缩略词的功能，即鼠标移动到缩略词上是，就显示声明在title里的属性值。效果为：缩略词下面有虚横线，鼠标移动到缩略词上时有手形图标。
+			例：
+				<abbr title="我们正在学习Bootstrap">在干嘛</abbr>
+				<abbr title="HyperText Markup Language" class="initialism">HTML</abbr>
+				initialism表示字体稍微缩小一些
+		
+				<abbr> 标签最初是在 HTML 4.0 中引入的，表示它所包含的文本是一个更长的单词或短语的缩写形式。
+		5) 地址元素
+			Bootstrap为地址元素address定义了一个简单通用的样式，其主要是行间距和底部的margin。用法也简单，每行用<br>结尾
+			例：
+				<address>
+					<strong>李白</strong><br>
+					大唐长安<br>
+					京东街828号<br>
+					<abbr title="Phone">P:</abbr>
+					18181818181
+				</address>
+				<address>
+					<strong>汤姆大叔</strong>
+					<a href="mailto:#">tomwu@outlook.com</a>
+				</address>
+
+		6) 引用
+			在<blockquote>元素里进行引用，可以引用任意HTML内容，但一般推荐使用<p>。Bootstrap也为此定义了一个通用的样式
+			例:
+				<blockquote>
+					<p>雨后江岸天破晓，老舟新客知多少</p>
+					<small>出自<cite title="燕归巢专辑">燕归巢</cite></small>
+				</blockquote>
+
+				加上的文字出处注释，使用small和cite，效果更佳。还可以加上.pull-right样式用以右对齐
+		7) 列表
+			Bootstrap提供6种形式的列表，分别是：普通列表、有序列表、去点列表、内联列表、描述列表、和水平描述列表。
+			1. 普通列表：与默认的列表一样，只是行间距有所改变
+				<ul>
+					<li>...</li>
+				</ul>
+			2. 有序列表：也是有一些细微变化，看起来更柔和一些
+				<ol>
+					<li>...</li>
+				</ol>
+			3. 去点列表：加.list-unstyled可以去除默认样式的点
+				<ul class="list-unstyled">
+					<li></li>
+				</ul>
+			4. 内联列表：使用.list-inline样式实现内联列表，也就是将列表项水平显示
+				<ul class="list-inline">
+					<li>首页</li>
+					<li>新闻</li>
+				</ul>
+			5. 定义列表：对默认的dl定义列表有微调，主要是行间距和字体加粗
+				<dl>
+					<dt></dt>
+					<dt></dt>
+				</dl>
+			6. 水平定义列表：在dl元素上应用.dl-horizontal样式，可以实现定义列表的水平显示
+				<dl class="dl-horizontal">
+					<dt></dt>
+					<dt></dt>
+				</dl>
+	2. 代码	
+		1) 内联代码
+			code标签实现，具体细节可以查看源码
+			例：
+				<code>public static void main(){}</code>
+		2) 用户输入代码
+			kbd标签实现，具体细节可以查看源码
+			例：
+				<kbd>public static void main(){}</kbd>
+		3) 多行代码块
+			pre标签实现，具体细节可以查看源码
+			例：
+				<pre>public static void main(){}</pre>		
+
+	3. 表格
+	在表格组件里，Bootstrap提供了1种基础.table样式、4种附加样式(.table-striped、.table-bordered、.table-hover、.table-condensed)以及一个支持响应式布局的.table-responsive容器样式
+		1) 基础样式：
+			只需要应用.table元素即可制作出漂亮的表格
+			例：
+			<table class="table">
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>11</td>
+					<td>22</td>
+					<td>33</td>
+				</tr>
+			</table>
+
+		2) 带背景条纹的表格：
+			在现有的.table样式的基础上加上一个.table-striped样式
+			<table class="table table-striped">
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>11</td>
+					<td>22</td>
+					<td>33</td>
+				</tr>
+			</table>
+
+		3) 带边框的表格：
+			.table-bordered样式为表格的所有单元格提供了一条1px的边框，使用方式和2)一样
+
+		4) 鼠标悬停高亮的表格：
+			.table-hover鼠标移动上去会在第一部分高亮显示，使用方式和2)一样
+
+		
+
+
+
+附加内容
+--------------------------------------------------------------------	
+1. CSS组件架构的设计思想(了解)
+	总的说来：就是AO模式，A表示Append（附加）；O表示Overwrite（重写）。所有的css组件都是沿用这种思想设计的。整个css组件，是由8大样式组装而成的
+	1)基础样式	
+		任何css组件在刚开始都要先定义基本样式，就像一个新的html页面要先定义统一的字号、背景色一样。在基础样式里，一般是定义该样式下的字体、外内边距、显示方式、边框以及其他相关内容,例如：btn,alert
+	2)颜色样式
+		Bootstrap默认提供5种颜色的样式，分别是：primary(重点蓝)、success(成功绿)、info(信息蓝)、warning(警告橙)、danger(危险红)。定义规则是：组件名称-颜色类型，例如：btn-primary、alert-info。
+	3)尺寸样式
+		Bootstrap也为大部分组件提供4种尺寸的快捷设置：超小(xs)、小型(sm)、普通、大型(lg)。
+		例如：
+			<button type="button" class="btn btn-xs">primary</button>
+			<button type="button" class="btn btn-lg">success</button>
+			<div class="well well-lg">...</div>
+			<div class="well well-sm">...</div>
+	4)状态样式
+		有一些可点击的元素，经常需要根据状态来显示其效果，比如高亮可用的时候用active样式，禁用的时候用disabled样式或disabled属性。这种类型的样式的原理是出来元素的阴影、鼠标形状、透明度、虚框等方面的内容。
+	5)特殊元素样式
+		所谓特殊元素，即特定类型的组件一般只使用某一种或者几种固定的元素，比如导航(nav)里经常用的li元素。在定义这些组件的时候，也要为这些组件定义其相关的默认样式，特殊元素样式不固定，取决于是什么样的特殊元素。
+	6)并列元素样式
+		在很多情况下，一个组件内部需要放置多个子元素，比如导航组件(nav)里可以放多个li元素，这是就需要处理这些并列元素的间距问题了。一般来说：水平并列的需要处理左右内边距(padding-left padding-right)和外边距(margin-left maring-right)，垂直并列需要处理上下内边距(padding-top padding-bottom)和外边距(margin-top margin-bottom)。
+	7)嵌套子元素样式
+		有时候，我们需要将两个相同或不同的组件嵌套在一起使用，这时经常会出现一些特殊情况，比如，多个按钮组一起使用或者按钮和下拉菜单一起使用
+	8)动画样式
+		该样式应用不多，只有进度条组件会使用到。只需要在progress样式上应用一个active样式即可开启动画过渡效果。
+		例：
+			<div class="progress progress-striped active">
+				<div class="progress-bar" style="width:45%">
+					<span class="sr-only">45% Complete</span>
+				</div>
+			</div>
+2. JavaScript插件架构介绍(了解)
+	Bootstrap所有的插件在开发的时候都遵循了同样的规则，同时开发人员在使用的时候也遵循类似的规则，这些规则奠定了Bootstrap插件开发的基础，也为我们【自定义插件】提供了规范和依据。三种规则：
+	1) html布局规则：
+		基于元素自定义属性的布局规则，比如使用类似于data-target的自定义属性，默认情况下，所有的插件都可以通过设置特定的html代码和相应的属性(或自定义属性)来实现。也就是说，在网页加载的时候，JavaScript代码会自动检测这些标记，并自动绑定相应的事件，而无需再添加额外的JavaScript代码。
+
+		例1：单击button会关闭警告框（由于设定了data-dismiss='alert'）
+			<div class="alert">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>警告！</strong>你输入的项目不合法！
+			</div>
+		例2：单击按钮默认隐藏的下拉菜单就会显示出来(由于设定了data-toggle='dropdown')
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					我的书籍<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">JavaScript 编程精解</a></li>
+					<li><a href="#">JavaScript 设计模式</a></li>
+					<li><a href="#">JavaScript 启示录</a></li>
+					<li class="divider"></li>
+					<li><a href="#">JavaScript 哈哈哈</a></li>
+				</ul>
+			</div>
+		例3（更复杂）：
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="active"><a data-toggle="tab" href="#home">首页</a></li>
+				<li class=""><a data-toggle="tab" href="#profile">个人资料</a></li>
+				<li class="dropdown">
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle">我的书籍<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a data-toggle="tab" href="#dropdown1">JavaScript 编程精解</a></li>
+						<li><a data-toggle="tab" href="#dropdown2">JavaScript 设计模式</a></li>
+						<li><a data-toggle="tab" href="#dropdown3">JavaScript 启示录</a></li>
+						<li><a data-toggle="tab" href="#dropdown4">JavaScript 哈哈哈</a></li>
+					</ul>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div id="home" class="tab-pane fade active in"><p>单击"首页"是显示该区域</p></div>
+				<div id="profile" class="tab-pane fade"><p>单击"个人资料"是显示该区域</p></div>
+				<div id="dropdown1" class="tab-pane fade"><p>单击"编程精解"是显示该区域</p></div>
+				<div id="dropdown2" class="tab-pane fade"><p>单击"设计模式"是显示该区域</p></div>
+				<div id="dropdown3" class="tab-pane fade"><p>单击"启示录"是显示该区域</p></div>
+				<div id="dropdown4" class="tab-pane fade"><p>单击"哈哈哈"是显示该区域</p></div>
+			</div>
+	2) JavaScript插件实现步骤
+		所有的插件都遵循jQuery插件开发的标准步骤，所有的事件都保持了统一标准。而要做到统一，需要5个步骤：
+		1. 定义一个立即调用的函数声明
+		例：+function($){
+				"use strict"//1.使用严格模式ES5支持
+				//2.alert插件类及原型方法的定义
+				//3.在jQuery上定义alert插件，并重设插件构造器
+				//	重设插件构造器，可以通过该属性获取插件的真实类函数
+				//4.防冲突处理
+				//5.绑定触发事件
+			}{window.jQuery};
+			在function关键字前面的（+），主要目的是防止前面有未正常结束的代码(通常是遗漏了分号),导致前后代码被编译器认为是一体的，从而导致代码运行出错。
+		2. 定义该插件的核心代码，也就是在触发特定行为(通常是单击行为)后要进行处理的代码。
+		例：//alert插件类及原型方法的定义
+			//定义选择器，所以符合该自定义属性的元素都可以触发下面的事件
+			var dismiss='[data-dismiss="alert"]'
+			var Alert = function(el){
+				//传入元素，如果元素内部有dismiss上设置的自定义属性，则click事件会触发原型上的close方法
+				$(el).on('click',dismiss,this.close);
+			}
+			Alert.prototype.close = function(e){
+				//关闭警告框的主要代码设置
+			}
+		3. 在jQuery上定义插件，以便通过jQuery.[插件名称]()的方式，也能够使用该插件，也就是在触发特定行为后要进行处理的通用代码。最后在这里再调用插件类或原型方法。
+		例：//在jQuery上定义alert插件，并重设插件构造器
+			var old = $.fn.alert
+			//保留其他插件的$.fn.alert代码(如果定义),以便在noConflict之后，可以继续使用改旧代码
+			$.fn.alert = function(option){
+				return this.each(function(){
+					//根据选择器，遍历所有符合规则的元素，然后在元素上绑定插件的实例，以监控用户的事件行为
+				})
+			}
+			$.fn.alert.Constructor = Alert;//重设插件构造器，可以通过该属性获取插件的真实类函数
+		4. 防冲突处理，目的是让Bootstrap插件和其他UI库的同名插件共存。Bootstrap所有的插件都支持防冲突(noConflict)功能
+		例：//防冲突处理
+			$.fn.alert.noConflict = function(){
+				$.fn.alert = old	//恢复以前的旧代码
+				return this			//将$.fn.noConflict()设置为Bootstrap的alert插件
+			}
+			这样一旦有了同名的插件，就可以将原来的插件备份，而要使用原来的插件是只需要通过var alert=$.fn.alert.noConflict()的形式，将备份还原到另一个变量上，就可以使用了。
+		5. 在一切都就绪之后，绑定默认的触发事件。由于jQuery提供了默认的$.fn.alert扩展插件功能，所以能通过手工编写JavaScript代码来触发事件。
+		例：//绑定触发事件
+			//为声明式的html绑定单击事件
+			//在整个document对象上，检测是否有自定义属性data-dismiss="alert"
+			//如果有，则设置：单击的时候，关闭指定的警告框元素
+			$(document).on('click.bs.alert.data-api',dismiss,Alert.prototype.close)
+	3) JavaScript插件调用方法
+			参照附加内容（原理）
+		Bootstrap所有的插件都可以通过配置使用，即通过特定的HTML设置，而不需要任何JavaScript再次触发。
+		如果需要启用手动触发事件的行为，可以禁用默认的行为，禁用方法如下：$(document).off('.data-api');
+		如果想禁用特定插件的默认行为，只需要禁用该插件所在命名空间下的事件即可。$(document).off('.alert.data-api');
+		1. 可编程性
+			所有的插件不仅可以使用声明式定义，也可以通过JavaScript代码全部实现
+			例：$(".btn.btn-danger").button("toggle").addClass("fat");
+			所有的插件在使用JavaScript调用时，都有多种调用方式
+			例：$("#myModal").modal()					//	无参数传递（默认方式）
+				$("#myModal").modal({keyboard:false})	//	传递对象字面量
+				$("#myModal").modal('show')				//	传入需要执行的方法名
+		2. 防冲突
+			和jQuery一样，Bootstrap插件可以和其他同类插件共存，为了防止$.fn.下的插件被覆盖，Bootstrap也提供了防冲突功能（noConflict）用法如下：
+				var btn = $.fn.button.noConflict();
+				//返回$.fn.button对象给btn
+				$.fn.BootstrapBtn = btn
+				//将button对象给btn变量赋予一个新插件名称$().bootstrapBtn,这时$().bootstrapBtn就有了先前button的所有功能了
+		3. 自定义事件
+			Bootstrap为很多插件都提供了自定义事件功能，比如，modal弹窗里提供的show和shown事件，show在弹窗初始化(即将弹出)的时候触发，而shown事件则在弹窗弹出后才触发。
+			在新版插件里，所有的事件都是命名空间化，即单个事件都要放在某个命名空间下，比如：show.bs.modal。
+			所有插件都有preventDefault功能用以阻止继续执行后续的代码。
+			例： $('#myModal').on('show.bs.modal',function(e){
+					if(!data) return e.preventDefault();	//如果条件不符合，就拒绝弹窗
+				});		
+
+	
